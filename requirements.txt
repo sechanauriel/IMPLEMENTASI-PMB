@@ -1,0 +1,6 @@
+SQLAlchemy>=1.4
+alembic>=1.10
+psycopg2-binary>=2.9  # for Postgres usage, optional
+fastapi>=0.95
+pydantic>=1.10
+uvicorn>=0.22

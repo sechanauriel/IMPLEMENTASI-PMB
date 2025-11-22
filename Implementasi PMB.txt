@@ -1,0 +1,51 @@
+Implementasi PMB (Penerimaan Mahasiswa Baru)
+
+Tools
+Backend: FastAPI/Flask
+Database: SQLite/MySQL
+AI: Mistral via HF Inference, Codeium
+Testing: pytest
+
+Step 1: Prompt untuk Database Schema
+
+Desain skema database PMB untuk sistem akademik:
+Tabel calon_mahasiswa: id, nama_lengkap, email (unique), phone,
+tanggal_lahir, alamat, program_studi_id, jalur_masuk
+(SNBP/SNBT/Mandiri), status (pending/approved/rejected),
+created_at, approved_at.
+Tabel program_studi: id, kode (3 char), nama, fakultas.
+Buat SQLAlchemy model + Alembic migration script.
+Tambahkan constraint phone format Indonesia dan email validation
+
+Step 2: Generate API Endpoints
+
+Buat FastAPI endpoint untuk PMB:
+1. POST /register: terima JSON calon mahasiswa, validasi input,
+simpan dengan status 'pending'
+2. PUT /approve/{id}: ubah status jadi 'approved', generate NIM
+format [tahun][kode_prodi][sequential], return NIM
+3. GET /status/{id}: return data pendaftar + status
+Sertakan error handling (404, 400, 409 conflict).
+Buat dependency injection untuk DB session
+
+Step 3: Implementasi NIM Generator
+
+Buat function generate_nim yang thread-safe
+def generate_nim(tahun: int, kode_prodi: str, db: Session) -> str:
+"""
+Generate NIM format: YYYY[KODE]XXXX
+Example: 2025001-0001
+"""
+# AI akan generate logic dengan database locking
+# Mahasiswa wajib pahami race condition handling
+
+Step 4: Testing Strategy
+
+Generate pytest untuk modul PMB:
+- test_register_success: data valid, return 201
+- test_register_duplicate_email: return 409 conflict
+- test_approve_generate_nim: NIM sesuai format dan sequential
+- test_approve_idempotent: approve 2x tidak generate NIM baru
+- test_invalid_phone_format: return 400
+Gunakan pytest fixtures untuk setup database.
+
