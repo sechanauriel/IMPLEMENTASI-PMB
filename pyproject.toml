@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pmb-sistem"
+version = "1.0.0"
+description = "Sistem Penerimaan Mahasiswa Baru dengan NIM Auto-Generate"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Student Developer", email = "developer@example.com"}
+]
+
+keywords = ["pmb", "fastapi", "education", "registration", "nim-generator"]
+
+dependencies = [
+    "fastapi==0.104.1",
+    "uvicorn==0.24.0",
+    "sqlalchemy==2.0.23",
+    "alembic==1.12.1",
+    "pydantic==2.5.0",
+    "pydantic-settings==2.1.0",
+    "python-dotenv==1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==7.4.3",
+    "pytest-asyncio==0.21.1",
+    "httpx==0.25.2",
+    "pytest-cov==4.1.0",
+]
+
+[tool.setuptools]
+packages = ["app", "tests"]
